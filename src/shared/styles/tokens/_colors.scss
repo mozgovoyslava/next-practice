@@ -1,0 +1,9 @@
+@use 'sass:color';
+
+// Миксин, чтобы удобно подключать в :root
+@mixin colors-root() {
+    --white: #fff;
+    --white-op-6: #{color.change(#fff, $alpha: 0.6)};
+    --grey: #f3f3f3;
+    --black: #27333e;
+}

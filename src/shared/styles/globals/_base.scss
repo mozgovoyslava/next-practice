@@ -1,0 +1,97 @@
+@use '@/shared/styles' as *;
+
+html {
+    font-family: $font-nunito;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    position: relative;
+    -ms-overflow-style: none;
+}
+
+body {
+    min-height: 100vh;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    position: relative;
+    flex-grow: 1;
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-decoration: inherit;
+    padding: 0;
+    margin: 0;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+ul,
+li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+input {
+    border: none;
+    background: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    -webkit-appearance: none;
+    color: inherit;
+
+    &:hover,
+    &:active,
+    &:focus {
+        outline: none;
+    }
+
+    &::placeholder {
+        letter-spacing: inherit;
+    }
+}
+
+button {
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+    padding: 0;
+    color: inherit;
+
+    &:hover,
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+
+a {
+    &:focus-visible {
+        outline: none;
+    }
+}
+
+b {
+    font-weight: 600;
+}

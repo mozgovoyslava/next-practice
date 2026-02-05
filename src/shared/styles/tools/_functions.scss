@@ -1,0 +1,34 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:math';
+@use '@/shared/styles/tokens/breakpoints' as bp;
+
+@function strip-unit($number) {
+    @if meta.type-of($number) == 'number' and not math.is-unitless($number) {
+        @return math.div($number, $number * 0 + 1);
+    }
+    @return $number;
+}
+
+@function unit($size, $root-font-size: 16) {
+    @return math.div($size, $root-font-size);
+}
+
+@function rem($size, $root-font-size: 16) {
+    @return unit(strip-unit($size), $root-font-size) * 1rem;
+}
+
+@function smooth-value($firstValue, $secondValue, $firstPoint, $secondPoint, $dimension) {
+    @return calc(
+        #{$firstValue}px + (#{$secondValue} - #{$firstValue}) * (100v#{$dimension} - #{$firstPoint}px) /
+            (#{$secondPoint} - #{$firstPoint})
+    );
+}
+
+@function vw($value, $base: fhd) {
+    @return math.div(strip-unit($value), map.get(bp.$breakpoints, $base)) * 100vw;
+}
+
+@function vh($value, $base: fhd) {
+    @return math.div(strip-unit($value), map.get(bp.$breakpoints-vertical, $base)) * 100vh;
+}

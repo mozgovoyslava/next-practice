@@ -1,0 +1,8 @@
+$increase-z: 10;
+$decrease-z: -10;
+
+$z-index-header: 100;
+$z-index-modal: $z-index-header + $increase-z;
+$z-index-cookies: $z-index-modal + $increase-z;
+$z-index-transition: $z-index-cookies + $increase-z;
+$z-index-preloader: $z-index-transition + $increase-z;

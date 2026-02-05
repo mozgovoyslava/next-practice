@@ -1,0 +1,28 @@
+@use 'sass:map';
+@use './fonts' as *;
+@use '@/shared/styles/tools/mixins' as mx;
+
+@mixin h1() {
+    font-family: $font-nunito;
+    font-weight: map.get($font-weights, extrabold);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+
+    @include mx.fonts(28, 36, 36, 40, 40);
+}
+
+@mixin text1-sb() {
+    font-family: $font-nunito;
+    font-weight: map.get($font-weights, semibold);
+    line-height: 1.3;
+
+    @include mx.fonts(16, 18, 18, 18, 18);
+}
+
+@mixin text1-b() {
+    font-family: $font-nunito;
+    font-weight: map.get($font-weights, bold);
+    line-height: 1.3;
+
+    @include mx.fonts(16, 18, 18, 18, 18);
+}

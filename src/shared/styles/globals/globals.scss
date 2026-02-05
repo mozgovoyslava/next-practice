@@ -1,0 +1,10 @@
+@use '../' as *;
+
+@use './reset';
+@use './base';
+@use './utilities';
+
+:root {
+    @include colors-root();
+    @include spacing-root();
+}

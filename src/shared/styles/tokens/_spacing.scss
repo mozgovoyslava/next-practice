@@ -1,0 +1,5 @@
+@use '@/shared/styles/tools/mixins' as mx;
+
+@mixin spacing-root() {
+    @include mx.smooth-offset(--offset-1, 20, 30, 40, 50, 100);
+}

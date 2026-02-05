@@ -1,0 +1,315 @@
+@use 'sass:list';
+@use 'sass:map';
+@use '@/shared/styles/tokens/breakpoints' as bp;
+@use '@/shared/styles/tools/functions' as fn;
+
+@mixin media-breakpoint-up($name) {
+    @media (min-width: #{map.get(bp.$breakpoints, $name)}px) {
+        @content;
+    }
+}
+
+@mixin media-breakpoint-down($name) {
+    @media (max-width: #{map.get(bp.$breakpoints, $name) - 1}px) {
+        @content;
+    }
+}
+
+@mixin media-breakpoint-range($from, $to) {
+    @include media-breakpoint-up($from) {
+        @include media-breakpoint-down($to) {
+            @content;
+        }
+    }
+}
+
+@mixin hover() {
+    @media (hover: hover) {
+        &:hover {
+            @content;
+        }
+    }
+}
+
+@mixin hoverParent($parentSelector) {
+    @media (hover: hover) {
+        #{$parentSelector}:hover & {
+            @content;
+        }
+    }
+}
+
+@mixin rem-fluid($property, $mobile, $tablet-768, $desktop-1280, $desktop-1440, $desktop-1920) {
+    $mobile-rem: fn.rem($mobile);
+    $tablet-768-rem: fn.rem($tablet-768);
+    $desktop-1280-rem: fn.rem($desktop-1280);
+    $desktop-1440-rem: fn.rem($desktop-1440);
+    $desktop-1920-rem: fn.rem($desktop-1920);
+
+    #{$property}: $mobile-rem;
+
+    @include media-breakpoint-up(xs) {
+        #{$property}: calc(
+            #{$mobile-rem} + (#{fn.strip-unit($tablet-768)} - #{fn.strip-unit($mobile)}) *
+                ((100vw - #{fn.rem(375)}) / (768 - 375))
+        );
+
+        @media (height <= 500px) {
+            #{$property}: $mobile-rem;
+        }
+    }
+
+    @include media-breakpoint-up(md) {
+        #{$property}: calc(
+            #{$tablet-768-rem} + (#{fn.strip-unit($desktop-1280)} - #{fn.strip-unit($tablet-768)}) *
+                ((100vw - #{fn.rem(768)}) / (1280 - 768))
+        );
+
+        @media (height <= 500px) {
+            #{$property}: calc(
+                #{$mobile-rem} + ((#{fn.strip-unit($desktop-1920-rem)} * 0.7) - #{fn.strip-unit($mobile-rem)}) *
+                    ((100vw - #{fn.rem(768)}) / (1280 - 768))
+            );
+        }
+    }
+
+    @include media-breakpoint-up(xl) {
+        #{$property}: calc(
+            #{$desktop-1280-rem} + (#{fn.strip-unit($desktop-1440)} - #{fn.strip-unit($desktop-1280)}) *
+                ((100vw - #{fn.rem(1280)}) / (1440 - 1280))
+        );
+
+        @media (height <= 500px) {
+            #{$property}: calc(
+                #{$mobile-rem} + ((#{fn.strip-unit($desktop-1920-rem)} * 0.7) - #{fn.strip-unit($mobile-rem)}) *
+                    ((100vw - #{fn.rem(768)}) / (1920 - 768))
+            );
+        }
+    }
+
+    @include media-breakpoint-up(xxl) {
+        #{$property}: calc(
+            #{$desktop-1440-rem} + (#{fn.strip-unit($desktop-1920)} - #{fn.strip-unit($desktop-1440)}) *
+                ((100vw - #{fn.rem(1440)}) / (1920 - 1440))
+        );
+
+        @media (height <= 500px) {
+            #{$property}: calc(
+                #{$mobile-rem} + ((#{fn.strip-unit($desktop-1920-rem)} * 0.7) - #{fn.strip-unit($mobile-rem)}) *
+                    ((100vw - #{fn.rem(768)}) / (1920 - 768))
+            );
+        }
+    }
+
+    @include media-breakpoint-up(max) {
+        #{$property}: fn.vw($desktop-1920);
+    }
+}
+
+@mixin rem-adaptive-font($mobile, $tablet-768, $desktop-1280, $desktop-1440, $desktop-1920) {
+    @include rem-fluid(font-size, $mobile, $tablet-768, $desktop-1280, $desktop-1440, $desktop-1920);
+}
+
+@mixin fonts($mobile, $tablet-768, $desktop-1280, $desktop-1440, $desktop-1920) {
+    font-size: #{$mobile}px;
+
+    @include media-breakpoint-up(md) {
+        font-size: #{$tablet-768}px;
+    }
+
+    @include media-breakpoint-up(xl) {
+        font-size: #{$desktop-1280}px;
+    }
+
+    @include media-breakpoint-up(xxl) {
+        font-size: #{$desktop-1440}px;
+    }
+
+    @include media-breakpoint-up(fhd) {
+        font-size: #{$desktop-1920}px;
+    }
+}
+
+/* FIX: вместо deprecated if() используем @if/@else */
+@mixin smooth-offset($property, $mobile, $tablet-md, $desktop-xl, $desktop-xxl, $desktop-fhd, $vh: false) {
+    @if $mobile {
+        @if list.length($mobile) == 3 {
+            $min: list.nth($mobile, 1);
+            $value: list.nth($mobile, 2);
+            $max: list.nth($mobile, 3);
+
+            @if $vh {
+                #{$property}: clamp(#{$min}px, fn.vh($value, xs), #{$max}px);
+            } @else {
+                #{$property}: clamp(#{$min}px, fn.vw($value, xs), #{$max}px);
+            }
+        } @else {
+            @if $vh {
+                #{$property}: fn.vh($mobile, xs);
+            } @else {
+                #{$property}: fn.vw($mobile, xs);
+            }
+        }
+    }
+
+    @if $tablet-md {
+        @include media-breakpoint-up(md) {
+            @if list.length($tablet-md) == 3 {
+                $min: list.nth($tablet-md, 1);
+                $value: list.nth($tablet-md, 2);
+                $max: list.nth($tablet-md, 3);
+
+                @if $vh {
+                    #{$property}: clamp(#{$min}px, fn.vh($value, md), #{$max}px);
+                } @else {
+                    #{$property}: clamp(#{$min}px, fn.vw($value, md), #{$max}px);
+                }
+            } @else {
+                @if $vh {
+                    #{$property}: fn.vh($tablet-md, md);
+                } @else {
+                    #{$property}: fn.vw($tablet-md, md);
+                }
+            }
+        }
+    }
+
+    @if $desktop-xl {
+        @include media-breakpoint-up(xl) {
+            @if list.length($desktop-xl) == 3 {
+                $min: list.nth($desktop-xl, 1);
+                $value: list.nth($desktop-xl, 2);
+                $max: list.nth($desktop-xl, 3);
+
+                @if $vh {
+                    #{$property}: clamp(#{$min}px, fn.vh($value, xl), #{$max}px);
+                } @else {
+                    #{$property}: clamp(#{$min}px, fn.vw($value, xl), #{$max}px);
+                }
+            } @else {
+                @if $vh {
+                    #{$property}: fn.vh($desktop-xl, xl);
+                } @else {
+                    #{$property}: fn.vw($desktop-xl, xl);
+                }
+            }
+        }
+    }
+
+    @if $desktop-xxl {
+        @include media-breakpoint-up(xxl) {
+            @if list.length($desktop-xxl) == 3 {
+                $min: list.nth($desktop-xxl, 1);
+                $value: list.nth($desktop-xxl, 2);
+                $max: list.nth($desktop-xxl, 3);
+
+                @if $vh {
+                    #{$property}: clamp(#{$min}px, fn.vh($value, xxl), #{$max}px);
+                } @else {
+                    #{$property}: clamp(#{$min}px, fn.vw($value, xxl), #{$max}px);
+                }
+            } @else {
+                @if $vh {
+                    #{$property}: fn.vh($desktop-xxl, xxl);
+                } @else {
+                    #{$property}: fn.vw($desktop-xxl, xxl);
+                }
+            }
+        }
+    }
+
+    @if $desktop-fhd {
+        @include media-breakpoint-up(fhd) {
+            @if list.length($desktop-fhd) == 3 {
+                $min: list.nth($desktop-fhd, 1);
+                $value: list.nth($desktop-fhd, 2);
+                $max: list.nth($desktop-fhd, 3);
+
+                @if $vh {
+                    #{$property}: clamp(fn.vw($min), fn.vh($value), fn.vw($max));
+                } @else {
+                    #{$property}: clamp(fn.vw($min), fn.vw($value), fn.vw($max));
+                }
+            } @else {
+                @if $vh {
+                    #{$property}: min(#{fn.vw($desktop-fhd)}, #{fn.vh($desktop-fhd)});
+                } @else {
+                    #{$property}: fn.vw($desktop-fhd);
+                }
+            }
+        }
+    }
+}
+
+@mixin clamp-text($linesCount) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $linesCount;
+    line-clamp: $linesCount;
+    -webkit-box-orient: vertical;
+}
+
+@mixin landscape($name: null) {
+    @if $name == null {
+        @media (orientation: landscape) {
+            @content;
+        }
+    } @else {
+        @media (orientation: landscape) and (min-width: #{map.get(bp.$breakpoints, $name)}px) {
+            @content;
+        }
+    }
+}
+
+@mixin hidden-native-scrollbar() {
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    scrollbar-width: none;
+}
+
+@mixin style-native-scrollbar($thumb-color: var(--grey), $track-color: var(--black)) {
+    @-moz-document url-prefix('') {
+        scrollbar-width: thin;
+        scrollbar-color: $thumb-color transparent;
+    }
+
+    &::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $thumb-color;
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: none;
+        background-color: transparent;
+        border-radius: 3px;
+    }
+}
+
+@mixin image-bg {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+@mixin safari {
+    @supports (-webkit-hyphens: none) and (not (-ms-ime-align: auto)) {
+        @content;
+    }
+}

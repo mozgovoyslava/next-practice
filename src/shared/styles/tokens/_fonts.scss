@@ -1,0 +1,9 @@
+// next/font/local кладёт CSS variable --font-nunito на <html class="...">
+$font-nunito: var(--font-nunito), Arial, sans-serif;
+
+$font-weights: (
+    regular: 400,
+    semibold: 600,
+    bold: 700,
+    extrabold: 800,
+);
