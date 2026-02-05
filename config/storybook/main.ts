@@ -1,12 +1,12 @@
-import type { StorybookConfig } from '@storybook/nextjs-vite'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import type { StorybookConfig } from '@storybook/nextjs-vite';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const SRC_DIR = path.resolve(__dirname, '../../src')
-const PUBLIC_DIR = path.resolve(__dirname, '../../public')
+const SRC_DIR = path.resolve(__dirname, '../../src');
+const PUBLIC_DIR = path.resolve(__dirname, '../../public');
 
 const config: StorybookConfig = {
     // пути относительно config/storybook
@@ -23,23 +23,23 @@ const config: StorybookConfig = {
 
     async viteFinal(viteConfig) {
         // alias '@' -> <root>/src
-        viteConfig.resolve = viteConfig.resolve ?? {}
-        
+        viteConfig.resolve = viteConfig.resolve ?? {};
+
         viteConfig.resolve.alias = {
             ...(viteConfig.resolve.alias ?? {}),
             '@': SRC_DIR,
-        }
+        };
 
         // Sass loadPaths -> чтобы работало: @use 'shared/styles'
-        viteConfig.css = viteConfig.css ?? {}
-        viteConfig.css.preprocessorOptions = viteConfig.css.preprocessorOptions ?? {}
-        viteConfig.css.preprocessorOptions.scss = viteConfig.css.preprocessorOptions.scss ?? {}
+        viteConfig.css = viteConfig.css ?? {};
+        viteConfig.css.preprocessorOptions = viteConfig.css.preprocessorOptions ?? {};
+        viteConfig.css.preprocessorOptions.scss = viteConfig.css.preprocessorOptions.scss ?? {};
 
-        const scss = viteConfig.css.preprocessorOptions.scss as any
-        scss.loadPaths = [...(scss.loadPaths ?? []), SRC_DIR]
+        const scss = viteConfig.css.preprocessorOptions.scss;
+        scss.loadPaths = [...(scss.loadPaths ?? []), SRC_DIR];
 
-        return viteConfig
+        return viteConfig;
     },
-}
+};
 
-export default config
+export default config;

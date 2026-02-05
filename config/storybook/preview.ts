@@ -3,7 +3,6 @@ import type { Preview } from '@storybook/nextjs-vite';
 import '@/shared/styles/globals/globals.scss';
 import { htmlFontVariablesClassName } from '@/shared/styles/fonts';
 
-
 const preview: Preview = {
     parameters: {
         controls: {
@@ -23,11 +22,11 @@ const preview: Preview = {
     decorators: [
         (Story) => {
             if (typeof document !== 'undefined') {
-                document.documentElement.classList.add(...htmlFontVariablesClassName.split(' ').filter(Boolean))
+                document.documentElement.classList.add(...htmlFontVariablesClassName.split(' ').filter(Boolean));
             }
-            return Story()
-        }
-    ]
+            return Story();
+        },
+    ],
 };
 
 export default preview;

@@ -1,5 +1,6 @@
 import React, { ButtonHTMLAttributes, FC } from 'react';
 import css from './Button.module.scss';
+import { classNames } from '@/shared/lib/classNames/classNames';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children?: React.ReactNode;
@@ -8,7 +9,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button: FC<ButtonProps> = ({ children, className, ...otherProps }) => {
     return (
-        <button className={css.root} {...otherProps}>
+        <button className={classNames(css.root, className)} {...otherProps}>
             {children}
         </button>
     );
