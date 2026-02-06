@@ -8,8 +8,7 @@ export const makeStore = () => {
             counter: counterReducer,
             [baseApi.reducerPath]: baseApi.reducer,
         },
-        middleware: (getDefaultMiddleware) =>
-            getDefaultMiddleware().concat(baseApi.middleware),
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
     });
 };
 

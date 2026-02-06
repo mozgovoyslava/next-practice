@@ -62,17 +62,33 @@ export default defineConfig([
                     basePath: process.cwd(),
                     zones: [
                         // shared (lowest) must not import from upper layers
-                        { target: 'src/shared', from: 'src/entities', message: 'Shared must not import from entities.' },
+                        {
+                            target: 'src/shared',
+                            from: 'src/entities',
+                            message: 'Shared must not import from entities.',
+                        },
                         { target: 'src/shared', from: 'src/widgets', message: 'Shared must not import from widgets.' },
                         { target: 'src/shared', from: 'src/app', message: 'Shared must not import from app.' },
 
                         // entities must not import from upper layers
-                        { target: 'src/entities', from: 'src/features', message: 'Entities must not import from features.' },
-                        { target: 'src/entities', from: 'src/widgets', message: 'Entities must not import from widgets.' },
+                        {
+                            target: 'src/entities',
+                            from: 'src/features',
+                            message: 'Entities must not import from features.',
+                        },
+                        {
+                            target: 'src/entities',
+                            from: 'src/widgets',
+                            message: 'Entities must not import from widgets.',
+                        },
                         { target: 'src/entities', from: 'src/app', message: 'Entities must not import from app.' },
 
                         // features must not import from upper layers
-                        { target: 'src/features', from: 'src/widgets', message: 'Features must not import from widgets.' },
+                        {
+                            target: 'src/features',
+                            from: 'src/widgets',
+                            message: 'Features must not import from widgets.',
+                        },
                         { target: 'src/features', from: 'src/app', message: 'Features must not import from app.' },
 
                         // widgets must not import from app
