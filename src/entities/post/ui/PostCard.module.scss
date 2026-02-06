@@ -1,0 +1,27 @@
+.root {
+    display: grid;
+    gap: 8px;
+    padding: 16px;
+    border: 1px solid #e6e6e6;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.body {
+    margin: 0;
+    color: #2b2b2b;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.meta {
+    font-size: 12px;
+    color: #6b6b6b;
+}

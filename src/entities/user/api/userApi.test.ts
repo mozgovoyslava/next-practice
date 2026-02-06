@@ -36,14 +36,12 @@ describe('userApi', () => {
             },
         ];
 
-        global.fetch = jest
-            .fn()
-            .mockResolvedValue(
-                new Response(JSON.stringify(users), {
-                    status: 200,
-                    headers: { 'Content-Type': 'application/json' },
-                }),
-            ) as typeof fetch;
+        global.fetch = jest.fn().mockResolvedValue(
+            new Response(JSON.stringify(users), {
+                status: 200,
+                headers: { 'Content-Type': 'application/json' },
+            }),
+        ) as typeof fetch;
 
         const store = makeStore();
         const result = await store.dispatch(userApi.endpoints.getUsers.initiate());

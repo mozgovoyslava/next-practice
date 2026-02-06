@@ -1,6 +1,6 @@
 ﻿import { Counter } from '@/features/counter';
-import { UsersList } from '@/widgets/usersList';
 import { Button } from '@/shared/ui';
+import { PostsList } from '@/widgets/postsList';
 
 export default function Home() {
     return (
@@ -9,7 +9,7 @@ export default function Home() {
 
             <Button>Кнопка</Button>
             <Counter />
-            <UsersList />
+            <PostsList />
         </main>
     );
 }
