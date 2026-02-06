@@ -1,20 +1,12 @@
 ﻿import type { Meta, StoryObj } from '@storybook/react';
-import { Provider } from 'react-redux';
-import { makeStore } from '@/shared/lib/store';
+import { withStore } from '@/shared/lib/storybook';
 import { Counter } from './Counter';
 
 const meta = {
     title: 'features/Counter',
     component: Counter,
     decorators: [
-        (Story) => {
-            const store = makeStore({ counter: { value: 5 } });
-            return (
-                <Provider store={store}>
-                    <Story />
-                </Provider>
-            );
-        },
+        withStore({ counter: { value: 5 } }),
     ],
     tags: ['autodocs'],
 } satisfies Meta<typeof Counter>;

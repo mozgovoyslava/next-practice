@@ -1,20 +1,12 @@
 ﻿import type { Meta, StoryObj } from '@storybook/react';
-import { Provider } from 'react-redux';
-import { makeStore } from '@/shared/lib/store';
+import { withStore } from '@/shared/lib/storybook';
 import { PostDetails } from './PostDetails';
 
 const meta = {
     title: 'widgets/PostDetails',
     component: PostDetails,
     decorators: [
-        (Story) => {
-            const store = makeStore();
-            return (
-                <Provider store={store}>
-                    <Story />
-                </Provider>
-            );
-        },
+        withStore(),
     ],
     tags: ['autodocs'],
     args: {

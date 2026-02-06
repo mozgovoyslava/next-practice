@@ -1,20 +1,12 @@
 ﻿import type { Meta, StoryObj } from '@storybook/react';
-import { Provider } from 'react-redux';
-import { makeStore } from '@/shared/lib/store';
+import { withStore } from '@/shared/lib/storybook';
 import { UsersList } from './UsersList';
 
 const meta = {
     title: 'widgets/UsersList',
     component: UsersList,
     decorators: [
-        (Story) => {
-            const store = makeStore();
-            return (
-                <Provider store={store}>
-                    <Story />
-                </Provider>
-            );
-        },
+        withStore(),
     ],
     tags: ['autodocs'],
 } satisfies Meta<typeof UsersList>;
